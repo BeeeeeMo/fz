@@ -1,0 +1,42 @@
+version: '3'
+services:
+  zeek:
+    image: csti/zeek
+    build: zeek
+    container_name: zeek
+    volumes:
+      - 'zeek-volume:/usr/local/zeek'
+      - './zeek:/zeek:rw'
+    # command: ['sleep', 'infinity']
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+      - NET_RAW
+    environment:
+      - IFNAME=${IFNAME:-eth0}
+    network_mode: host
+    restart: unless-stopped
+
+  fluent-bit:
+    image: fluent/fluent-bit:2.1
+    container_name: fb-zeek
+    volumes:
+      - './fluent-bit:/fluent-bit/etc'
+      - 'zeek-volume:/opt/zeek'
+    restart: unless-stopped
+
+  cron:
+    image: csti/cron
+    container_name: cron-zeek
+    build: cron
+    volumes:
+      - 'zeek-volume:/opt/zeek'
+      - './cron:/cron'
+    environment:
+      - remove_days=${REMOVE_DAYS:-7}
+    restart: unless-stopped
+
+volumes:
+  zeek-volume:
+
+
