@@ -1,9 +1,9 @@
 version: '3'
 services:
   zeek:
-    image: csti/zeek
+    image: fz/zeek
     build: zeek
-    container_name: zeek
+    container_name: fz-zeek
     volumes:
       - 'zeek-volume:/usr/local/zeek'
       - './zeek:/zeek:rw'
@@ -19,15 +19,15 @@ services:
 
   fluent-bit:
     image: fluent/fluent-bit:2.1
-    container_name: fb-zeek
+    container_name: fz-fluentbit
     volumes:
       - './fluent-bit:/fluent-bit/etc'
       - 'zeek-volume:/opt/zeek'
     restart: unless-stopped
 
   cron:
-    image: csti/cron
-    container_name: cron-zeek
+    image: fz/cron
+    container_name: fz-cron
     build: cron
     volumes:
       - 'zeek-volume:/opt/zeek'
