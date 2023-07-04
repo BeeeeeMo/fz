@@ -31,7 +31,7 @@ services:
     build: cron
     volumes:
       - 'zeek-volume:/opt/zeek'
-      - './cron:/cron'
+      - './cron:/image'
     environment:
       - remove_days=${REMOVE_DAYS:-7}
     restart: unless-stopped
