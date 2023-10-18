@@ -22,6 +22,9 @@ REMOVE_DAYS=7
 IFNAME=br1
 ```
 
+#### Zeek configuration
+If you have a custom `local.zeek` file, please place it in the `zeek/local.zeek` directory.
+
 #### Fluent-bit
 The configuration settings for Fluent-bit can be found in the file `fluent-bit/fluent-bit.conf`
 
